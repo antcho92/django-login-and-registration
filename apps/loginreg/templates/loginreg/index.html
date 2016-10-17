@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Login and Registration</title>
+        <style>
+            input {
+                display: block;
+            }
+            li {
+                list-style: none;
+            }
+            .messages {
+                border: 10px dotted pink;
+            }
+            .error {
+                color: red;
+            }
+            .success {
+                color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Login</h1>
+        <form action="/login" method="post">
+            {% csrf_token %}
+            <input type="text" name="email" value="" placeholder="Email">
+            <input type="text" name="pw" value="" placeholder="Password">
+            <input type="submit" name="name" value="Login">
+        </form>
+        <h1>Registration</h1>
+        {% if messages %}
+            <ul class='messages'>
+                {% for message in messages %}
+                    <li{%if message.tags %} class="{{message.tags}}" {% endif %}>{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form action="/register" method="post">
+            {% csrf_token %}
+            <input type="text" name="first_name" value="" placeholder="First name">
+            <input type="text" name="last_name" value="" placeholder="Last name">
+            <input type="text" name="email" value="" placeholder="email">
+            <input type="text" name="pw" value="" placeholder="password">
+            <input type="text" name="pw_confirmation" value="" placeholder="password confirmation">
+            <input type="submit" name="name" value="Register">
+        </form>
+    </body>
+</html>
