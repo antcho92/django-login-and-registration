@@ -22,7 +22,7 @@ class EmailManager(models.Manager):
             return (False, errors)
         else:
             User.objects.create(email=form_data['email'], first_name=form_data['first_name'], last_name=form_data['last_name'], pw_hash=form_data['pw'])
-            return (True, user)
+            return (True, form_data['first_name'])
 
 # Create your models here.
 class User(models.Model):

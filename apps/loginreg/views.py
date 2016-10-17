@@ -13,6 +13,7 @@ def login(request):
 def register(request):
     if request.method == 'POST':
         result = User.objects.register(request.POST)
+        #check if registration validation returns true
         if result[0]:
             # add user to success flash message
             messages.success(request, request.POST['email'])
