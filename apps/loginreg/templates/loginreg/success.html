@@ -3,16 +3,24 @@
     <head>
         <meta charset="utf-8">
         <title>Success</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'loginreg/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
     </head>
     <body>
-        {% with messages = get_flashed_messages() %}
         {% if messages %}
-        {% for message in messages %}
-        <div>
-            <h1>{{message}}</h1>
-        </div>
-        {% endfor %}
+            <ul class='messages'>
+                {% for message in messages %}
+                    <li{%if message.tags %} class="{{message.tags}}" {% endif %}> {{message}}</li>
+                {% endfor %}
+            </ul>
         {% endif %}
-        {% endwith %}
+        <h2>Users in Database:</h2>
+        {% if users %}
+            <ul>
+                {% for user in users %}
+                    <li>{{user.first_name}} {{user.email}} {{Created_at}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </body>
 </html>

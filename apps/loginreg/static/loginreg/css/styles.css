@@ -1,0 +1,15 @@
+input {
+    display: block;
+}
+li {
+    list-style: none;
+}
+.messages {
+    border: 1px solid black;
+}
+.error {
+    color: red;
+}
+.success {
+    color: green;
+}

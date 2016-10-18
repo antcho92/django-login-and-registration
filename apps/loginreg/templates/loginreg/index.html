@@ -3,23 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title>Login and Registration</title>
-        <style>
-            input {
-                display: block;
-            }
-            li {
-                list-style: none;
-            }
-            .messages {
-                border: 10px dotted pink;
-            }
-            .error {
-                color: red;
-            }
-            .success {
-                color: green;
-            }
-        </style>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'loginreg/css/styles.css' %}"media="screen" title="no title"  charset="utf-8">
     </head>
     <body>
         <h1>Login</h1>
