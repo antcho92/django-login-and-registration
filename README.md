@@ -12,4 +12,5 @@ To Do:
 2. Use bcrypt to make hashes and store in db - done
 3. More validation for names, passwords, email - done
 4. Storing login status with session - done
-5. Fix flash messages
+5. Fix flash messages - done
+6. Add named routes?

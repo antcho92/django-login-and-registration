@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import User
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 def index(request):
@@ -13,7 +14,6 @@ def login(request):
     if request.method == 'POST':
         validation = User.objects.login(request.POST)
         if validation[0]:
-            print(validation[1].first_name)
             return log_user_in(request, validation[1])
             # messages.success(request, "Successfully logged in")
             # return redirect('/success')
@@ -51,7 +51,7 @@ def log_user_in(request, user):
     print("running log_user_in function")
     request.session['user_id'] = user.id
     # add user to success flash message
-    messages.success(request, user.email)
+    messages.success(request, "Welcome, {}. You are logged in.".format(user.first_name))
     return redirect('/success')
 
 def logout(request):
