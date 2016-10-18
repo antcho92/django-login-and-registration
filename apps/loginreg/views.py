@@ -4,14 +4,19 @@ from django.contrib import messages
 
 # Create your views here.
 def index(request):
-    return render(request, 'loginreg/index.html')
+    if 'user_id' in request.session:
+        return redirect('/success')
+    else:
+        return render(request, 'loginreg/index.html')
 
 def login(request):
     if request.method == 'POST':
         validation = User.objects.login(request.POST)
         if validation[0]:
-            messages.success(request, "Successfully logged in")
-            return redirect('/success')
+            print(validation[1].first_name)
+            return log_user_in(request, validation[1])
+            # messages.success(request, "Successfully logged in")
+            # return redirect('/success')
         else:
             messages.error(request, validation[1])
             return redirect('/')
@@ -23,9 +28,7 @@ def register(request):
         validation = User.objects.register(request.POST)
         #check if registration validation returns true
         if validation[0]:
-            # add user to success flash message
-            messages.success(request, validation[1].email)
-            return redirect('/success')
+            return log_user_in(request, validation[1])
         else:
             for error in validation[1]:
                 # add errors to flash messages
@@ -35,11 +38,22 @@ def register(request):
         return redirect('/')
 
 def success(request):
-    context = {
-        'users': User.objects.all()
-    }
-    return render(request, 'loginreg/success.html', context)
+    if 'user_id' not in request.session:
+        messages.error(request, "You are not logged in")
+        return redirect('/')
+    else:
+        context = {
+            'users': User.objects.all()
+        }
+        return render(request, 'loginreg/success.html', context)
 
 def log_user_in(request, user):
-    
-    return redirect('success')
+    print("running log_user_in function")
+    request.session['user_id'] = user.id
+    # add user to success flash message
+    messages.success(request, user.email)
+    return redirect('/success')
+
+def logout(request):
+    del request.session['user_id']
+    return redirect('/')

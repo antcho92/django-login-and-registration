@@ -14,9 +14,11 @@ class UserManager(models.Manager):
         # retrieve the user from database using email
         user = User.objects.filter(email=form_data['email'])
         if user:
+            print('User found in database')
             user = user[0]
             if bcrypt.checkpw(form_data['pw'].encode(), user.pw_hash.encode()):
                 print("passwords match")
+                # returning user object to views
                 return (True, user)
         return (False, "Invalid email or password")
 
