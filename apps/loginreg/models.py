@@ -23,18 +23,23 @@ class UserManager(models.Manager):
     def register(self, form_data):
         # Validation portion. Pushes all errors to an array that is returned if there are errors
         errors = []
-        if len(form_data['email']) == 0:
-            errors.append("Email is required")
+        if not name_regex.match(form_data['first_name']) or not name_regex.match(form_data['last_name']):
+            errors.append("Invalid first or last name")
         if not email_regex.match(form_data['email']):
             errors.append("Invalid Email")
-
+        if len(form_data['pw']) < 8:
+            errors.append("Password must be 8 or more characters in length")
+        if form_data['pw'] != form_data['pw_confirmation']:
+            errors.append("Password must match password confirmation")
+        user = User.objects.filter(email=form_data['email'])
+        if user:
+            errors.append("Email has already been used")
         # checks if there were any errors
         if len(errors) is not 0:
             return (False, errors)
         else:
             print("passed validations")
-            #print(form_data['pw'].encode())
-            #create the hashed password using bcrypt. Remember to encode
+            # create the hashed password using bcrypt. Remember to encode
             pw_hash = bcrypt.hashpw(form_data['pw'].encode(), bcrypt.gensalt().encode())
             # create() method in objects returns newly entered entry in your db
             user = User.objects.create(email=form_data['email'], first_name=form_data['first_name'], last_name=form_data['last_name'], pw_hash=pw_hash)

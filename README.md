@@ -7,9 +7,9 @@ Functionality:
 
 
 To Do:
-1. Success page with flash messages -done
-2. Login functionality -done
-2. Use bcrypt to make hashes and store in db -done
-3. More validation for names, passwords, email
+1. Success page with flash messages - done
+2. Login functionality - done
+2. Use bcrypt to make hashes and store in db - done
+3. More validation for names, passwords, email - done
 4. Storing login status with session
 5. Fix flash messages

@@ -39,3 +39,7 @@ def success(request):
         'users': User.objects.all()
     }
     return render(request, 'loginreg/success.html', context)
+
+def log_user_in(request, user):
+    
+    return redirect('success')
