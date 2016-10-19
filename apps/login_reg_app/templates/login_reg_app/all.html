@@ -33,6 +33,6 @@
                 {% endfor %}
             </table>
         {% endif %}
-        <a href="/accounts/logout">Logout</a>
+        <a href="{% url 'users:logout' %}">Logout</a>
     </body>
 </html>

@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 # Create your views here.
 def index(request):
     if 'user_id' in request.session:
-        return redirect('/accounts/all')
+        return redirect(reverse('users:all'))
     else:
         return render(request, 'login_reg_app/index.html')
 
@@ -26,8 +26,8 @@ def register(request):
         else:
             for error in validation[1]:
                 messages.error(request, error)
-            return redirect('/accounts')
-    return redirect('/accounts')
+            return redirect(reverse('users:index'))
+    return redirect(reverse('users:index'))
 def login(request):
     if request.method == 'POST':
         validation = User.objects.login(request.POST)
@@ -35,20 +35,20 @@ def login(request):
             return log_user_in(request, validation[1])
         else:
             messages.error(request, validation[1])
-    return redirect('/accounts')
+    return redirect(reverse('users:index'))
 
 def log_user_in(request, user):
     print("running log_user_in function")
     request.session['user_id'] = user.id
     # add user to success flash message
     messages.success(request, "Welcome, {}. You are logged in.".format(user.first_name))
-    return redirect('/accounts/all')
+    return redirect(reverse('users:all'))
 
 def logout(request):
     if 'user_id' in request.session:
         del request.session['user_id']
         messages.success(request, "You have been successfully logged out")
-        return redirect('/accounts')
+        return redirect(reverse('users:index'))
     else:
         messages.error(request, "You were not logged in")
-        return redirect('/accounts')
+        return redirect(reverse('users:index'))

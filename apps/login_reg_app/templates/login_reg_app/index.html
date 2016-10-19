@@ -35,7 +35,8 @@
         <br>
         <div id="login">
             <h2>Login</h2>
-            <form class="" action="/accounts/login" method="post">
+            <form class="" action="
+            {% url 'users:login' %}" method="post">
                 {% csrf_token %}
                 Email: <input type="text" name="email" value="">
                 <br>
